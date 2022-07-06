@@ -5,7 +5,8 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
-use GuzzleHttp\Middleware;
+use App\Http\Controllers\MailController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,23 +19,35 @@ use GuzzleHttp\Middleware;
 |
 */
 
-// Route::get('da', function () {
-//     return view('Admin.data');
+// Route::get('/', function () {
+//     return view('welcome');
 // });
 
-Route::group(['middleware'=>['auth']], function() { 
+Route::get('login',[UserController::class,'login'])->name('login');
+Route::post('login_data',[UserController::class,'login_data'])->name('login_data');
 
-Route::get('admin', function () { return view('Admin.page'); });
-Route::get('admin', function () { return view('Admin.page'); });
+Route::group(['middleware'=>['admin']], function() { 
+
+    Route::get('list',[GalleryController::class,'show']);
+    Route::get('logout',[UserController::class,'logout']);
+
+});
+
+Route::group(['middleware'=>['user']], function() { 
+
+// Route::get('admin', function () { return view('Admin.page'); });
+// Route::get('admin', function () { return view('Admin.page'); });
 Route::get('main',[WebController::class,'webpage']);
 
-Route::post('register',[GalleryController::class,'index']);
-Route::get('list',[GalleryController::class,'show']);
+Route::post('register',[GalleryController::class,'insert']);
+
 Route::get('form',[GalleryController::class,'view']);
 Route::get('edit/{id}',[GalleryController::class,'edit']);
 Route::get('delete/{id}',[GalleryController::class,'delete']);
 Route::post('update',[GalleryController::class,'update']);
 Route::get('image/{id}',[GalleryController::class,'relation']);
+
+Route::get('download/{id}', [GalleryController::class, 'download']);
 // Route::get('image/{id}',[WebController::class,'relation']);
 
 
@@ -47,11 +60,9 @@ Route::post('update1',[BlogController::class,'update']);
 Route::get('delete1/{id}',[BlogController::class,'destroy']);
 
 
-
-Route::get('logout',[UserController::class,'logout']);
 });
-Route::get('login',[UserController::class,'login'])->name('login');
-Route::post('login_data',[UserController::class,'login_data'])->name('login_data');
+
+Route::get('/send-email', [MailController::class, 'sendEmail']);
 // Route::get('list',[UserController::class,'login']);
 
 

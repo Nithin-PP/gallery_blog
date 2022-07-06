@@ -1,11 +1,13 @@
 <?php 
 namespace App\Repositories;
 use App\Models\Gallery;
-  
-class GalleryRepository{
+use App\Models\Notification; 
 
+class GalleryRepository{
+ 
     public function InsertData($data){
          $gallery = new Gallery;
+         $gallery->users_id= 1;
          $gallery->title = $data['title'];
          $gallery->detail = $data['detail'];
          $gallery->description = $data['desc'];
@@ -16,8 +18,20 @@ class GalleryRepository{
          $file->move('uploads/',$filename);
          $gallery->image = $filename;
          $gallery->save();
-         return true;
+
+         $this->notification();
     }
+    public function notification(){
+        $gallery=Gallery::latest('id')->first();
+        $gal=$gallery['users_id'];
+        
+        $notify=new Notification();
+        $notify->users_id=$gal;
+        $notify->title="blog added";
+        $notify->save();
+
+    }
+
     public function selectData()
     {
         return Gallery::orderBy('id','DESC')->get();

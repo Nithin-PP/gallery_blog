@@ -25,8 +25,10 @@ class BlogController extends Controller
         $file->move('uploads/',$filename);
         $blog->image = $filename;
         $blog->save();
+       
     return redirect('list');
     }
+  
 
     public function show($id)
     {
@@ -43,6 +45,7 @@ class BlogController extends Controller
 
     public function update(Request $request)
     {
+        
     $update=Blog::find($request->id);
         $id=$request->id;
     if($request->hasFile('file')){   

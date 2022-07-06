@@ -17,7 +17,7 @@
             <th colspan="2">operations</th>
             <th colspan="2">related</th>
         </tr>
-        @foreach($gall as $gal)
+        @foreach($result as $gal)
         <tr>
             <td>{{$count}}</td>
             <td>{{$gal->title}}</td>

@@ -7,6 +7,8 @@
 <!-- @if($errors->any())
     {!! implode('', $errors->all('<div class="alert alert-danger">:message</div>')) !!}
 @endif -->
+    <a href="{{url('download/'. $edited->id)}}" class="btn btn-light">download <i class="fa fa-download" aria-hidden="true"></i></a>
+    <br>
         <form id="form" action="{{url('update')}}" name="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="hidden" id="hidden" value="{{$edited->id}}">
             @csrf
@@ -35,5 +37,5 @@
         </form>
     </div>
  </div>
-    @endsection
+@endsection
  
