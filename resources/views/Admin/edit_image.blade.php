@@ -1,5 +1,12 @@
-@extends('Admin.Layouts.layout')
- @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard</title>
+  @include('Includes.header')
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+@include('Includes.adminmenu')
  <div class="wrapper">
 <div class="container" style="margin-top:10px;">
 <h2 style="margin-bottom: 20px;">Gallery Images</h2>
@@ -20,4 +27,6 @@
         </form>
     </div>
  </div>
-    @endsection
+ @include('Includes.footer')
+</body>
+</html>

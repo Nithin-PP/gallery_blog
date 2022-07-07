@@ -5,20 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Repositories\GalleryRepository;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
 
     public function notify()
     {
-        
+        $notfic = Notification::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -30,9 +27,11 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+
+        DB::table('notifications')->update(array('role_id' => 1));
+        return redirect('home');
     }
 
     /**

@@ -29,12 +29,9 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('list');
+            return redirect()->intended('home');
         }
         return redirect()->intended('login');
-        // return back()->withErrors([
-        //     'email' => 'The provided credentials do not match our records.',
-        // ])->onlyInput('email');
     }
 
     public function logout(Request $request) {

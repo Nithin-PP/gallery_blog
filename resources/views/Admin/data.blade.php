@@ -1,5 +1,12 @@
-@extends('Admin.Layouts.layout')
- @section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Dashboard</title>
+  @include('Includes.header')
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+@include('Includes.adminmenu')
 <div class="content-wrapper">
             <div class="card">
               <div class="card-header">
@@ -43,7 +50,9 @@
             </div>
             <!-- /.card -->
             </div>
-@endsection
+            @include('Includes.footer')
+</body>
+</html>
 
 <script>
     $(document).ready(function() {

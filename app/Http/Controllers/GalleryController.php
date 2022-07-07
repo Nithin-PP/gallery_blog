@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Gallery;
 use App\Models\Blog;
+
 use App\Repositories\GalleryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailDemo;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 
@@ -16,78 +18,93 @@ class GalleryController extends Controller
 
 
 
-    public function __construct(GalleryRepository $GalleryRepository){
+    public function __construct(GalleryRepository $GalleryRepository)
+    {
         $this->GalleryRepository = $GalleryRepository;
+    }
 
-        }
+    public function view()
+    {
+        return view('Admin.gallery');
+    }
 
-        public function view(){
-            return view('Admin.gallery');
-        }
-
-        public function insert(Request $request){
-               $data = $request->all();
-               $result = $this->GalleryRepository-> InsertData($data);
-               return redirect('list');
-        }
-
-        public function show(){
-            $result = $this->GalleryRepository-> selectData();
-            return view('Admin.list', compact('result'));
-        }
-
-        public function edit($id)
-        {
-            $result = $this->GalleryRepository->editData($id);
-            return view('Admin.edit_gallery',['edited'=>$result]);
-        }
-
-        public function update(Request $request)
-        {
-            $data= $request->all();
-            $result = $this->GalleryRepository->updateData($data);
+    public function insert(Request $request)
+    {
+        $data = $request->all();
+        $result = $this->GalleryRepository->InsertData($data);
         return redirect('list');
-        }
-      
-        public function delete($id)
-        {
-            $result = $this->GalleryRepository-> deleteData($id);
-            return redirect('list')->with('success', 'Data Deleted Succesfully !!');
-        }
+    }
 
-        public function relation($id){
-         
-            $result=Gallery::with('blogData')->where('id', $id)->get();  
-            return view('Web.Layouts.single', compact('result'));            
-        } 
+    public function index()
+    {
+        return view('Admin.dashboard');
+    }
 
-        public function download($id){
+    public function show()
+    {
+        $result = $this->GalleryRepository->selectData();
+        return view('Admin.list', compact('result'));
+    }
 
-            $gallery = Gallery::find($id); 
-            $blog = Blog::where('galleries_id', $id)->get();
-    
-            $email = 'nithin.pp@webandcrafts.in';  
-            
-            $data = ['title'=>'gallery',
+    public function edit($id)
+    {
+        $result = $this->GalleryRepository->editData($id);
+        return view('Admin.edit_gallery', ['edited' => $result]);
+    }
+
+    public function update(Request $request)
+    {
+        $data = $request->all();
+        $result = $this->GalleryRepository->updateData($data);
+        return redirect('list');
+    }
+
+    public function delete($id)
+    {
+        $result = $this->GalleryRepository->deleteData($id);
+        return redirect('list')->with('success', 'Data Deleted Succesfully !!');
+    }
+
+    public function relation($id)
+    {
+
+        $result = Gallery::with('blogData')->where('id', $id)->get();
+        return view('Web.Layouts.single', compact('result'));
+    }
+
+    public function download($id)
+    {
+
+        $gallery = Gallery::find($id);
+        $blog = Blog::where('galleries_id', $id)->get();
+
+        $email = 'nithin.pp@webandcrafts.in';
+
+        $data = [
+            'title' => 'gallery',
             'title1' => 'related data',
             'gal' => $gallery,
-            'blg' => $blog 
-            ];
-    
-            $mailData = [
+            'blg' => $blog
+        ];
+
+        $mailData = [
             'title' => 'Demo Email',
             'url' => 'https://www.positronx.io'
-            ];
-    
-            $pdf=PDF::loadView('Admin.pdf', $data);
-    
-            Mail::to($email)->send(new EmailDemo($mailData, $pdf));
-    
-            return $pdf->download('view.pdf');
-            // return view('Admin.pdf',compact('gallery', 'blog' ,'data'));
-    
-        }
-        
+        ];
+
+        $pdf = PDF::loadView('Admin.pdf', $data);
+
+        Mail::to($email)->send(new EmailDemo($mailData, $pdf));
+
+        return $pdf->download('view.pdf');
+        // return view('Admin.pdf',compact('gallery', 'blog' ,'data'));
+
+    }
+    public function notify()
+    {
+        $notif = Notification::all();
+    }
+
     //     public function viewStatus()
     //      {
 
@@ -117,4 +134,4 @@ class GalleryController extends Controller
 
 
 
-    }
+}

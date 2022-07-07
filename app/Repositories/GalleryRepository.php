@@ -1,13 +1,17 @@
 <?php 
 namespace App\Repositories;
+
 use App\Models\Gallery;
-use App\Models\Notification; 
+use App\Models\Notification;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class GalleryRepository{
  
     public function InsertData($data){
+        $userId=Auth::user()->id;
          $gallery = new Gallery;
-         $gallery->users_id= 1;
+         $gallery->users_id= $userId;
          $gallery->title = $data['title'];
          $gallery->detail = $data['detail'];
          $gallery->description = $data['desc'];
@@ -28,6 +32,7 @@ class GalleryRepository{
         $notify=new Notification();
         $notify->users_id=$gal;
         $notify->title="blog added";
+        $notify->role_id=0;
         $notify->save();
 
     }

@@ -13,7 +13,7 @@ class User
     {
         if (Auth::guard($guard)->check()) {   
             $user = Auth::guard($guard)->user();          
-            if(in_array($user->roles_id, [2]))
+            if(in_array($user->roles_id, [2,3]))
             {
                 return $next($request);
                          

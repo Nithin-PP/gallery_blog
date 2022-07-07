@@ -21,9 +21,9 @@ use App\Http\Controllers\Api\ApiController;
 
 
 
-Route::post('register',[ApiController::class,'register']);
-Route::post('login',[ApiController::class,'login']);
+Route::post('register', [ApiController::class, 'register']);
+Route::post('login', [ApiController::class, 'login']);
 
-Route::post('index',[ApiController::class,'index'])->middleware('auth:sanctum'); 
-Route::get('show',[ApiController::class,'show'])->middleware('auth:sanctum');
-Route::post('update/{id}',[ApiController::class,'update']);
+Route::post('index', [ApiController::class, 'index'])->middleware('auth:sanctum');
+Route::get('show', [ApiController::class, 'show'])->middleware('auth:sanctum');
+Route::post('update/{id}', [ApiController::class, 'update']);
