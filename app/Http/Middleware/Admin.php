@@ -11,7 +11,7 @@ class Admin
     {
         if (Auth::guard($guard)->check()) {   
             $user = Auth::guard($guard)->user();          
-            if(in_array($user->roles_id, [1,2]))
+            if(in_array($user->roles_id, [1]))
             {
                 return $next($request);                        
             }  

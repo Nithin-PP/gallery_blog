@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     
     Route::get('home', [GalleryController::class, 'index']);
     Route::get('logout', [UserController::class, 'logout']);
+    
     Route::get('list', [GalleryController::class, 'show']);
     Route::get('main', [WebController::class, 'webpage']);
     Route::post('register', [GalleryController::class, 'insert']);

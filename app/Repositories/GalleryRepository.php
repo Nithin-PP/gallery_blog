@@ -22,7 +22,6 @@ class GalleryRepository{
          $file->move('uploads/',$filename);
          $gallery->image = $filename;
          $gallery->save();
-
          $this->notification();
     }
     public function notification(){
